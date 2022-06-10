@@ -89,7 +89,7 @@ classification_layer = {
 def run(extractor, classification_layer, images_df, batch_size=64, logger=Logger()):
     images_df = images_df.copy()
     if len(images_df) == 0:
-        print 'No images found!'
+        print('No images found!')
         return -1, 0, 0
     probs = extractor.extract(images_df['image_path'].values, [classification_layer],
                               verbose=1, batch_size=batch_size)
@@ -107,7 +107,16 @@ def run(extractor, classification_layer, images_df, batch_size=64, logger=Logger
 # image filenames must be in format "{content_name}_stylized_{artist_name}.jpg"
 # uncomment methods which you want to evaluate and set the paths to the folders with the stylized images
 results_dir = {
-    'ours': 'path/to/our/stylizations',
+    'Ours': '/data/jsy/code/VQStyleTransfer/results/train/GatedGAN/2022-01-20-2/test/multi-artists-res-for_deception_rate',
+    'Ours-for-morisot-picasso-pollock-kandinsky': '/data/jsy/code/VQStyleTransfer/results/train/GatedGAN/2022-02-19-1/test/multi-artists-res_for_deception_rate',
+    'Ours-for-morisot-picasso': '/data/jsy/code/VQStyleTransfer/results/train/GatedGAN/2022-02-22-1/test/multi-artists-res-for_deception_rate',
+    'Ours-for-picasso': '/data/jsy/code/VQStyleTransfer/results/train/GatedGAN/2022-02-22-2/test/multi-artists-res-for_deception_rate',
+    'AST': '/data/jsy/code/adaptive-style-transfer/results/used_for_deception_rate_1',
+    'ASMA-GAN': '/data/jsy/code/ASMAGAN/test_logs/ASMAfinal/results_for_deception_rate',
+    'Gated-GAN': '/data/jsy/code/VQStyleTransfer/results/train/OriGatedGAN/2022-02-13-1/test/multi-artists-res-for_deception_rate',
+    'AdaIN': '/data/jsy/code/AdaIN/results/test_for_collection_based_method_for_deception_rate',
+    'SANet': '/data/jsy/code/SANET/results/test_for_collection_based_method_for_deception_rate',
+    'Incremental-training': '/data/jsy/code/VQStyleTransfer/results/train/FixedAEGatedGAN/2022-01-11-3/test/500000-for-deception-rate',
     # 'gatys': 'path/to/gatys_stylizations',
     # 'cyclegan': '',
     # 'adain': '',
@@ -136,8 +145,10 @@ artist_2_label_wikiart = get_artist_labels_wikiart()
 
 
 def get_images_df(dataset, method, artist_slug):
+    print(results_dir)
     images_dir = results_dir[method]
     paths = glob.glob(os.path.join(images_dir, '*.jpg')) + glob.glob(os.path.join(images_dir, '*.png'))
+    print(paths)
     # print paths
     assert len(paths) or method.startswith('real')
 
@@ -175,7 +186,7 @@ if __name__ == '__main__':
     if not os.path.exists(os.path.dirname(args['log_path'])):
         os.makedirs(os.path.dirname(args['log_path']))
     logger = Logger(args['log_path'])
-    print 'Snapshot: {}'.format(args['snapshot_path'])
+    print('Snapshot: {}'.format(args['snapshot_path']))
     extractor = create_slim_extractor(args)
     classification_layer = classification_layer[args['net']]
 
@@ -190,7 +201,7 @@ if __name__ == '__main__':
         stats[artist] = (acc, num_is_correct, num_total)
 
     logger.log('{}'.format(pformat(args)))
-    print 'Images dir:', results_dir[args['method']]
+    print('Images dir:', results_dir[args['method']])
     logger.log('===\n\n')
     logger.log(args['method'])
     logger.log('{}'.format(sprint_stats(stats)))

@@ -475,7 +475,7 @@ class Artgan(object):
         # Create folder to store results.
         if to_save_dir is None:
             to_save_dir = os.path.join(self.root_dir, self.model_name,
-                                       'inference_ckpt%d_sz%d' % (self.initial_step, self.image_size))
+                                       'inference_ckpt%d_sz%d_for_fid' % (self.initial_step, self.image_size))
 
         if not os.path.exists(to_save_dir):
             os.makedirs(to_save_dir)

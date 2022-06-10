@@ -108,3 +108,6 @@ venv.bak/
 models
 logs
 evaluation/evaluation_data
+data/
+results/
+evaluation_data/

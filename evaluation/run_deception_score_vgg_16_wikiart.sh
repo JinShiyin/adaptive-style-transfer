@@ -23,7 +23,8 @@ mkdir -p ${LOG_DIR}
 
 NET=vgg_16_multihead
 
-METHODS=( "ours" )
+# METHODS=( "Ours" "AST" "ASMA-GAN" "Gated-GAN" "AdaIN" "SANet" )
+METHODS=( "Incremental-training" )
 #METHODS=( "ours" "real_wiki_test" )
 
 for method in ${METHODS[@]}
